@@ -18,10 +18,7 @@ const ListContextProvider = ({itemRenderer, ...props}) => {
 
 
 const ItemWrapper = ({ data, index, style }) => {
-  const { ItemRenderer, stickyIndices } = data;
-  if (stickyIndices && stickyIndices.includes(index)) {
-    return null;
-  }
+  const { ItemRenderer} = data;
   return <ItemRenderer index={index} style={style} />;
 };
 
