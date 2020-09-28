@@ -1,3 +1,17 @@
+# Scroll demo
+
+Infinite scroll component with
+- React Window
+- React Infinite scroll
+
+Demoing
+- Sticky header
+- Easy loading logic (although we are going to probably want the ability to skip pages, which we will use takeLatest saga effects)
+- padding on header
+
+
+## Bla Bla
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts

@@ -1,26 +1,50 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Fragment, PureComponent } from "react";
+import { name } from "faker";
+import Consumer from "./Consumer";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
+const ITEM_COUNT = 100;
+
+class App extends PureComponent {
+  state = {
+    hasNextPage: true,
+    isNextPageLoading: false,
+    items: []
+  };
+
+  _loadNextPage = (...args) => {
+    console.log("loadNextPage", ...args);
+    this.setState({ isNextPageLoading: true }, () => {
+      setTimeout(() => {
+        this.setState(state => ({
+          hasNextPage: state.items.length < ITEM_COUNT,
+          isNextPageLoading: false,
+          items: [...state.items].concat(
+            new Array(15).fill(true).map(() => ({ name: name.findName() }))
+          )
+        }));
+      }, 500);
+    });
+  };
+
+  render() {
+    const { hasNextPage, isNextPageLoading, items } = this.state;
+
+    return (
+      <Fragment>
+        <Consumer
+          hasNextPage={hasNextPage}
+          isNextPageLoading={isNextPageLoading}
+          items={items}
+          itemCount={ITEM_COUNT}
+          loadNextPage={this._loadNextPage}
+        />
+
+        <p className="Note">
+          Infinite loading + header + sticky
         </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+      </Fragment>
+    );
+  }
 }
 
 export default App;
